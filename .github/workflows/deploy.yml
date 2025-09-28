@@ -27,7 +27,7 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Deploy to madhusudan-mewada.github.io
+      - name: Deploy to mewada-madhusudan.github.io
         run: |
           cd dist
           git init
@@ -36,5 +36,5 @@ jobs:
           git add .
           git commit -m "Deploy from portfolio-source"
           git branch -M main
-          git remote add origin https://x-access-token:${{ secrets.PAGES_DEPLOY_TOKEN }}@github.com/madhusudan-mewada/madhusudan-mewada.github.io.git
+          git remote add origin https://x-access-token:${{ secrets.PAGES_DEPLOY_TOKEN }}@github.com/mewada-madhusudan/mewada-madhusudan.github.io.git
           git push -f origin main
