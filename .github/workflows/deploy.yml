@@ -1,0 +1,40 @@
+name: Build and Deploy Portfolio
+
+on:
+  push:
+    branches:
+      - main   # change if your default branch is different
+
+permissions:
+  contents: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20   # match your local version
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to madhusudan-mewada.github.io
+        run: |
+          cd dist
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Deploy from portfolio-source"
+          git branch -M main
+          git remote add origin https://x-access-token:${{ secrets.PAGES_DEPLOY_TOKEN }}@github.com/madhusudan-mewada/madhusudan-mewada.github.io.git
+          git push -f origin main
